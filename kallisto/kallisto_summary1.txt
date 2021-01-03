@@ -1,0 +1,12 @@
+ Replicate_00 1e+06 46.9238 90.8
+ Replicate_01 1e+06 47.3982 90.1
+ Replicate_02 1e+06 46.2073 89.9
+ Replicate_03 1e+06 45.1942 92.3
+ Replicate_04 1e+06 45.366 92.4
+ Replicate_05 1e+06 45.6272 91.6
+ Replicate_06 1e+06 45.6842 91.9
+ Replicate_07 1e+06 44.372 92.6
+ Replicate_08 1e+06 44.4868 92.6
+ Replicate_09 1e+06 44.9725 92.2
+ Replicate_10 1e+06 45.3796 92.2
+ Replicate_11 1e+06 45.7579 91.8
