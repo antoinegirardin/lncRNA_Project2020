@@ -10,8 +10,10 @@
 #SBATCH --output=/data/users/agirardin/output/output_kallisto_%j.o
 #SBATCH --error=/data/users/agirardin/error/error_kallisto_%j.e
 
+## Move to results directory
 cd kallisto/results
 
+## Count  the number total tpm, the rate of expressed transcripts and the pseudoalignment rate
 for i in `ls`
 do echo $i >> ../kallisto_summary.txt
 awk 'BEGIN{i=0}{if($5>0){i+=$5}}END{print i}' ${i}/abundance.tsv >> ../kallisto_summary.txt
@@ -19,6 +21,9 @@ awk 'BEGIN{i=j=0}{i+=1;if($5>0){j+=1}}END{k=100*j/i;print k}' ${i}/abundance.tsv
 awk '$1~/p_pseudoaligned/{print $2}' ${i}/run_info.json >> ../kallisto_summary.txt
 done
 
+## Move back to kallisto folder
 cd ..
+
+## Reformat kallisto_summary.txt
 awk 'BEGIN{i=0;j=""}{i+=1;j=j" "$0;if(i==4){i=0;print j; j=""}}' kallisto_summary.txt > kallisto_summary1.txt
 sed -i -e 's/,//g' kallisto_summary1.txt

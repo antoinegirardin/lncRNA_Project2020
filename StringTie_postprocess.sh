@@ -9,8 +9,10 @@
 #SBATCH --output=/data/users/agirardin/output/output_StringTie_%j.o
 #SBATCH --error=/data/users/agirardin/error/error_StringTie_%j.e
 
+## Move to results directory
 cd StringTie
 
+## Select each transcripts files depending on there types
 awk '{if($3=="transcript"){print $0}}' meta-assembly.gtf > meta-assembly_transcripts.gtf
 awk '{if($10~ /MSTRG/){print $0}}' meta-assembly_transcripts.gtf > meta-assembly_noveltranscripts.gtf
 awk '{if($13~ /gene/){print $0}}' meta-assembly_noveltranscripts.gtf > meta-assembly_notannotatedtranscripts.gtf
@@ -18,12 +20,14 @@ awk '{if($13 !~ /gene/){print $0}}' meta-assembly_transcripts.gtf > meta-assembl
 awk '{if($10~ /ENSG/){print $0}}' meta-assembly_transcripts.gtf > meta-assembly_annotatedtranscripts.gtf
 awk '{print $14}' meta-assembly_annotatedtranscripts.gtf | sort | uniq -c > meta-assembly_annotatedgenes.txt
 
+## Count each type of transcripts
 wc -l meta-assembly_transcripts.gtf > meta-assembly_summary.csv
 wc -l meta-assembly_annotatedtranscripts.gtf >> meta-assembly_summary.csv
 wc -l meta-assembly_noveltranscripts.gtf >> meta-assembly_summary.csv
 wc -l meta-assembly_notannotatedtranscripts.gtf >> meta-assembly_summary.csv
 wc -l meta-assembly_annotatedgenes.txt >> meta-assembly_summary.csv
 
+## Count the number of exon per transcript and the length of the transcripts
 awk 'BEGIN{k=""}{if($3=="transcript"){print i,j,k; i=0; j=$5-$4; k=$12}if($3=="exon"){i+=1}}END{print i,j,k}' meta-assembly.gtf > meta-assembly_count.csv
 sed -i '1d' meta-assembly_count.csv
 sed -i -e 's/\"//g' meta-assembly_count.csv
