@@ -34,6 +34,6 @@ ln -s $READS_DIR/reference-files/grch38 .
 ## Loop over each paired reads and launch hisat2 for read mapping with reference genome
 ## Transform .sam file to .bam file with samtools
 for i in `seq 0 11`
-do hisat2 -x grch38/genome -1 $READS_DIR/fastq/${FILES[2*${i}]} -2 $READS_DIR/fastq/${FILES[2*${i}+1]} -S Replicate_${i}.sam
+do hisat2 -p 4 -x grch38/genome -1 $READS_DIR/fastq/${FILES[2*${i}]} -2 $READS_DIR/fastq/${FILES[2*${i}+1]} -S Replicate_${i}.sam
 samtools view -bS Replicate_${i}.sam > Replicate_${i}.bam
 done
